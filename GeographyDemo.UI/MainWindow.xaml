@@ -2,7 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button Click="Button_Click"/>
-    </Grid>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CountyListBlockStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="0,10,10,10"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel>
+
+        <Button Command="{Binding GetDataCommand}" Content="Get data..." DockPanel.Dock="Top"/>
+        
+        <TabControl>
+            <TabItem Header="Basic">
+                <ListBox ItemsSource="{Binding CountiesCollection}" DisplayMemberPath="Name"/>
+            </TabItem>
+
+            <TabItem Header="Blocks">
+                <ListBox ItemsSource="{Binding CountiesCollection}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Style="{StaticResource CountyListBlockStyle}" DisplayMemberPath="Name"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

@@ -23,7 +23,6 @@ namespace GeographyDemo.UI
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,7 +30,6 @@ namespace GeographyDemo.UI
             using (var client = new CountiesClient())
             {
                 var counties = client.GetCounties();
-
             }
 
         }
