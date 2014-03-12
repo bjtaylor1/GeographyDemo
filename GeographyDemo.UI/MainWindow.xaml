@@ -7,27 +7,42 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CountyListBlockStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="0,10,10,10"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
+            
+            <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
         </ResourceDictionary>
     </Window.Resources>
-    
-    <DockPanel>
 
-        <Button Command="{Binding GetDataCommand}" Content="Get data..." DockPanel.Dock="Top"/>
-        
-        <TabControl>
-            <TabItem Header="Basic">
-                <ListBox ItemsSource="{Binding CountiesCollection}" DisplayMemberPath="Name"/>
-            </TabItem>
+    <Grid>
+        <DockPanel>
 
-            <TabItem Header="Blocks">
-                <ListBox ItemsSource="{Binding CountiesCollection}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Command="{Binding GetDataCommand}" Content="Get data..."/>
+                <Button Command="{Binding GetDataAsyncCommand}" Content="Get data async..."/>
+            </StackPanel>
+
+
+            <TabControl>
+                <TabItem Header="Basic">
+                    <ListBox ItemsSource="{Binding CountiesCollection}" DisplayMemberPath="Name"/>
+                </TabItem>
+
+                <TabItem Header="Blocks">
+                    <ListBox ItemsSource="{Binding CountiesCollection}"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          Style="{StaticResource CountyListBlockStyle}" DisplayMemberPath="Name"/>
-            </TabItem>
-        </TabControl>
-    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+        
+        <Grid Background="LightGray" Opacity="0.5" Visibility="{Binding IsGettingData, Converter={StaticResource visibilityConverter}}">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Getting data... please wait" FontSize="20"/>
+                <ProgressBar IsIndeterminate="True" Height="15"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Window>
